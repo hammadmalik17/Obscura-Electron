@@ -1,0 +1,98 @@
+{
+  "name": "obscura-vault",
+  "version": "2.0.1",
+  "description": "Obscura Vault - Secure Password Manager with AES-256 Encryption",
+  "main": "main.js",
+  "homepage": "https://github.com/hammadmalik/Obscura-V2",
+  "author": {
+    "name": "Hammad Malik",
+    "email": "drhammadmalik2020@gmail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win --x64",
+    "build:portable": "electron-builder --win --x64 --config.win.target=portable",
+    "dist": "electron-builder --publish=never",
+    "clean": "rimraf dist"
+  },
+  "keywords": [
+    "password-manager",
+    "encryption", 
+    "security",
+    "vault",
+    "aes-256",
+    "electron",
+    "desktop-app"
+  ],
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "appId": "com.hammadmalik.obscura-vault",
+    "productName": "Obscura Vault",
+    "artifactName": "${productName}-${version}-Setup.${ext}",
+    "copyright": "Copyright © 2025 Hammad Malik",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "obscura_backend.py",
+      "auth.js", 
+      "vault.js",
+      "matrix.js",
+      "index.html",
+      "styles.css",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "requestedExecutionLevel": "asInvoker",
+      "signAndEditExecutable": false,
+      "artifactName": "${productName}-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Obscura Vault"
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["x64", "arm64"]
+        }
+      ],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "build/icon.png",
+      "category": "Utility"
+    }
+  }
+}

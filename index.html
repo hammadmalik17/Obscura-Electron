@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obscura Vault - Hammad Malik</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Matrix Background -->
+    <canvas id="matrix-bg"></canvas>
+    
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <div class="logo-container">
+                <div class="logo-gradient">
+                    <h1 class="logo-text">OBSCURA</h1>
+                    <div class="logo-subtitle">SECURE VAULT</div>
+                </div>
+            </div>
+            
+            <div class="welcome-text">
+                <h2>Welcome Back, Hammad Malik</h2>
+                <p>Enter your master password to access your encrypted vault</p>
+            </div>
+            
+            <div class="auth-form">
+                <div class="input-group">
+                    <input type="password" id="master-password" placeholder="Master Password" class="auth-input">
+                    <div class="input-icon">🔐</div>
+                </div>
+                
+                <button id="unlock-btn" class="auth-button">
+                    <span class="button-text">Unlock Vault</span>
+                    <div class="button-loading hidden">
+                        <div class="spinner"></div>
+                        <span>Decrypting...</span>
+                    </div>
+                </button>
+                
+                <div class="security-info">
+                    <div class="security-item">🛡️ AES-256 Encryption</div>
+                    <div class="security-item">🔒 Zero-Knowledge Architecture</div>
+                    <div class="security-item">⚡ Auto-Lock Security</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Vault Screen -->
+    <div id="vault-screen" class="screen">
+        <div class="app-container">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <h1 class="app-title">
+                        <span class="title-icon">🔐</span>
+                        OBSCURA VAULT
+                    </h1>
+                    <div class="owner-label">Hammad Malik's Secure Vault</div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>AES-256 Encrypted</span>
+                    </div>
+                    <button id="lock-btn" class="lock-button">
+                        🔒 Lock Vault
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="🔍 Search encrypted entries..." class="search-input">
+                    </div>
+                    
+                    <select id="type-filter" class="filter-select">
+                        <option value="all">All Types</option>
+                        <option value="api_key">API Keys</option>
+                        <option value="password">Passwords</option>
+                        <option value="credit_card">Credit Cards</option>
+                        <option value="debit_card">Debit Cards</option>
+                        <option value="bank_details">Bank Details</option>
+                        <option value="secure_note">Secure Notes</option>
+                    </select>
+                    
+                    <select id="category-filter" class="filter-select">
+                        <option value="all">All Categories</option>
+                        <option value="OpenAI">OpenAI</option>
+                        <option value="Google">Google</option>
+                        <option value="GitHub">GitHub</option>
+                        <option value="SBI Bank">SBI Bank</option>
+                        <option value="HDFC Bank">HDFC Bank</option>
+                        <option value="Banking">Banking</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Work">Work</option>
+                    </select>
+                </div>
+                
+                <div class="toolbar-right">
+                    <div class="add-buttons">
+                        <button class="add-btn api-key" data-type="api_key">
+                            🔑 API Key
+                        </button>
+                        <button class="add-btn password" data-type="password">
+                            🔒 Password
+                        </button>
+                        <button class="add-btn credit-card" data-type="credit_card">
+                            💳 Credit Card
+                        </button>
+                        <button class="add-btn debit-card" data-type="debit_card">
+                            💰 Debit Card
+                        </button>
+                        <button class="add-btn banking" data-type="bank_details">
+                            🏦 Banking
+                        </button>
+                        <button class="add-btn note" data-type="secure_note">
+                            📝 Note
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <main class="main-content">
+                <div id="entries-container" class="entries-container">
+                    <!-- Entries will be populated by JavaScript -->
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading encrypted entries...</p>
+                    </div>
+                </div>
+            </main>
+            
+            <!-- Status Bar -->
+            <footer class="status-bar">
+                <div class="status-left">
+                    <span id="entry-count">0 encrypted entries</span>
+                </div>
+                <div class="status-right">
+                    <span>Session: <span id="session-time">00:00</span></span>
+                    <span class="separator">•</span>
+                    <span>AES-256-GCM</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Add Entry Modal -->
+    <div id="add-entry-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Add New Entry</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="entry-form">
+                    <!-- Form fields will be populated by JavaScript -->
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel-btn">Cancel</button>
+                <button type="submit" form="entry-form" class="btn btn-primary" id="save-btn">
+                    🔐 Encrypt & Save
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+    
+    <!-- Scripts -->
+    <script src="matrix.js"></script>
+    <script src="auth.js"></script>
+    <script src="vault.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
